@@ -28,6 +28,15 @@
         <a href="#trends" class="nav-link">Trends</a>
         <a href="#tools" class="nav-link">Tools</a>
       </nav>
+
+      <div class="category-filters">
+        <span class="filter-label">Filter by:</span>
+        <button class="filter-btn active" data-category="all">All</button>
+        <button class="filter-btn" data-category="insights">AI Insights</button>
+        <button class="filter-btn" data-category="trends">Trends</button>
+        <button class="filter-btn" data-category="tools">Tools</button>
+        <button class="filter-btn" data-category="tutorials">Tutorials</button>
+      </div>
     </header>
 
     <main>
@@ -44,21 +53,21 @@
       </section>
 
       <section class="posts-grid">
-        <article class="post-card">
+        <article class="post-card" data-category="insights">
           <span>AI Insight</span>
           <h3>Building trust with transparent AI prompts</h3>
           <p>Learn how simple prompt structure and transparent intent can improve model responses while keeping readers confident in your process.</p>
           <a href="#">Read more</a>
         </article>
 
-        <article class="post-card">
+        <article class="post-card" data-category="trends">
           <span>Trend</span>
           <h3>AI agents as team assistants in 2026</h3>
           <p>Discover the latest shift toward personal productivity agents and how teams are using them to automate research, note-taking, and status updates.</p>
           <a href="#">Read more</a>
         </article>
 
-        <article class="post-card">
+        <article class="post-card" data-category="tools">
           <span>Tool</span>
           <h3>Minimal AI tools worth trying this week</h3>
           <p>Get a curated list of lightweight AI tools for writing, image ideas, and code cleanup that work without heavy configuration.</p>
@@ -104,5 +113,57 @@
       <p>Daily AI Blog • Minimal design for modern AI updates</p>
     </footer>
   </div>
+
+  <script>
+    // Category filter functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      const postCards = document.querySelectorAll('.post-card');
+
+      filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const selectedCategory = this.getAttribute('data-category');
+          
+          // Update active button
+          filterButtons.forEach(btn => btn.classList.remove('active'));
+          this.classList.add('active');
+
+          // Filter posts
+          postCards.forEach(card => {
+            const cardCategory = card.getAttribute('data-category');
+            if (selectedCategory === 'all' || cardCategory === selectedCategory) {
+              card.style.display = 'block';
+              setTimeout(() => card.classList.add('show'), 10);
+            } else {
+              card.classList.remove('show');
+              setTimeout(() => card.style.display = 'none', 300);
+            }
+          });
+        });
+      });
+
+      // Search functionality
+      const searchInput = document.querySelector('.search-input');
+      const searchBtn = document.querySelector('.search-btn');
+      
+      const performSearch = () => {
+        const query = searchInput.value.toLowerCase();
+        postCards.forEach(card => {
+          const title = card.querySelector('h3').textContent.toLowerCase();
+          const text = card.textContent.toLowerCase();
+          if (title.includes(query) || text.includes(query) || query === '') {
+            card.style.display = 'block';
+            setTimeout(() => card.classList.add('show'), 10);
+          } else {
+            card.classList.remove('show');
+            setTimeout(() => card.style.display = 'none', 300);
+          }
+        });
+      };
+
+      searchBtn.addEventListener('click', performSearch);
+      searchInput.addEventListener('keyup', performSearch);
+    });
+  </script>
 </body>
 </html>

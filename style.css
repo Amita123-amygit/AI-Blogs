@@ -222,7 +222,17 @@ body {
   border-radius: 18px;
   background: #fff;
   border: 1px solid #ebe9e6;
-  transition: transform 0.2s ease, border-color 0.2s ease;
+  transition: all 0.3s ease, opacity 0.3s ease;
+  opacity: 1;
+}
+
+.post-card:not(.show) {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.post-card.show {
+  animation: fadeInUp 0.3s ease forwards;
 }
 
 .post-card:hover {
@@ -320,6 +330,65 @@ body {
   color: #6c6a64;
 }
 
+.category-filters {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 0;
+  border-top: 1px solid #ebe9e6;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.filter-label {
+  font-weight: 700;
+  color: #4d4b47;
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+.filter-btn {
+  padding: 8px 16px;
+  background: #f6f5f3;
+  border: 2px solid #ebe9e6;
+  border-radius: 20px;
+  color: #333;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.filter-btn:hover {
+  border-color: #d4d2ce;
+  background: #eeeae5;
+  transform: translateY(-2px);
+}
+
+.filter-btn.active {
+  background: #1f2937;
+  color: #fff;
+  border-color: #1f2937;
+  box-shadow: 0 4px 12px rgba(31, 41, 55, 0.2);
+}
+
+.filter-btn.active:hover {
+  background: #111;
+  border-color: #111;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (max-width: 720px) {
   .hero {
     grid-template-columns: 1fr;
@@ -354,6 +423,23 @@ body {
   .site-nav {
     width: 100%;
     gap: 18px;
+  }
+
+  .category-filters {
+    gap: 10px;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+
+  .filter-label {
+    flex-shrink: 0;
+  }
+
+  .filter-btn {
+    flex-shrink: 0;
+    padding: 7px 14px;
+    font-size: 0.85rem;
   }
 
   .site-footer {
